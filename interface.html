@@ -187,12 +187,23 @@ jQuery(document).ready(function(){
 
 	jQuery("#generate-random").click(function() {
 
-	 var first = makeId(3);
+	   //Between users, keep the 'first' 3 digits the same (store them in a cookie). Example usage is a doctor who keeps starting new forums. He doesn't want to be on a different server, and
+	  //have to reconnect the MedImage Server each time.
+	  var storedServer = getCookie("stored-server");
+	  if(!storedServer) {
+	  	var first = makeId(3);
+	  	//Save this server as a cookie
+	  	document.cookie = 'stored-server=' + first + '; path=/; expires=' + cookieOffset() + ';';
+	  } else {
+	  	var first = storedServer;
+	  }
 	  var second = makeId(3);
 	  var third = makeId(3);
 	  jQuery("#first").val(first);
 	  jQuery("#second").val(second);
 	  jQuery("#third").val(third);
+	  
+	 
 	  
 	  var shareableURL = "http://ajmp.co/" + first.toLowerCase() + second.toLowerCase() + third.toLowerCase();
 	    
